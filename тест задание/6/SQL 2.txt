@@ -1,0 +1,29 @@
+Задание 2
+Напишите запросы, которые вывели бы:
+•	Наименования всех контрагентов, у которых имеется телефон (таблицы Contras  и Telct ) и поле Respondent пустое.
+•	Наименования всех контрагентов и телефоны для тех из них, у которых он существует. 
+•	Наименование и количество указанных телефонов тех  контрагентов, у которых указано более одного телефона. 
+•	Наименования контрагентов, у которых не привязано ни одного телефона.
+
+1.
+Select (Select Nm_Ct from Contras a where a.CodCt=b.CodCt)  Nm_Ct 
+from Telct b
+where b.TelNum<>chr(1) 
+and b.Respondent is not null
+ 
+2.
+Select a.Nm_Ct 
+from Contras a
+where exists (Select 1 from Telct b where b.CodCt = a.CodCt)
+
+3.
+Select a.Nm_Ct, count(b.TelNum)
+from Contras a, Telct b
+where a.CodCt=b.CodCt
+group by a.Nm_Ct
+having count(b.TelNum)>1
+
+4.
+Select a.Nm_Ct 
+from Contras a
+where not exists (Select 1 from Telct b where b.CodCt = a.CodCt)
