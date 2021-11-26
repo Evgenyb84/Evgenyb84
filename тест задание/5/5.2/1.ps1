@@ -1,0 +1,1 @@
+(Get-Process -Name ReportService.exe -ComputerName OscarTestApp).Kill()
